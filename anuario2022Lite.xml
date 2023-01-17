@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<sc:ReportResponse xmlns:sc="http://www.niso.org/schemas/sushi/counter" xmlns:s="http://www.niso.org/schemas/sushi" xmlns:c="http://www.niso.org/schemas/counter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.niso.org/schemas/sushi http://www.niso.org/schemas/sushi/sushi1_7.xsd http://www.niso.org/schemas/sushi/counter http://www.niso.org/schemas/sushi/sushi_counter4_1.xsd ">
+  <s:Requestor>
+    <s:ID>anonymous</s:ID>
+    <s:Name/>
+    <s:Email/>
+  </s:Requestor>
+  <s:CustomerReference>
+    <s:ID/>
+  </s:CustomerReference>
+  <s:ReportDefinition Name="JR1" Release="4.1">
+    <s:Filters>
+      <s:UsageDateRange>
+        <s:Begin>2022-01-01</s:Begin>
+        <s:End>2022-12-31</s:End>
+      </s:UsageDateRange>
+    </s:Filters>
+  </s:ReportDefinition>
+  <sc:Report>
+  <c:Report xmlns="http://www.niso.org/schemas/counter" Created="2023-01-12T03:51:37+01:00" ID="7CC1B1E6-7341-4277-A7C6-D092C4B06622" Version="4_1" Name="JR1" Title="Informe de revista 1">
+    <c:Vendor>
+      <c:Name>Universitat Aut&#xF2;noma de Barcelona</c:Name>
+      <c:ID>https://revistes.uab.cat/anuarioiet</c:ID>
+      <c:Contact>
+        <c:Contact>Isabel Hern&#xE1;ndez de la Rosa</c:Contact>
+        <c:E-mail>anuario.iet@uab.cat</c:E-mail>
+      </c:Contact>
+      <c:WebSiteUrl>https://revistes.uab.cat/anuarioiet</c:WebSiteUrl>
+    </c:Vendor>
+    <c:Customer>
+      <c:Name>Todos los clientes/as</c:Name>
+      <c:ID>0</c:ID>
+      <c:ReportItems>
+        <c:ItemIdentifier>
+          <c:Type>Online_ISSN</c:Type>
+          <c:Value>2339-5753</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemIdentifier>
+          <c:Type>Proprietary</c:Type>
+          <c:Value>anuarioiet</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemPlatform>Open Journal Systems</c:ItemPlatform>
+        <c:ItemName>Anuario IET de Trabajo y Relaciones Laborales</c:ItemName>
+        <c:ItemDataType>Journal</c:ItemDataType>
+        <c:ItemPerformance>
+          <c:Period>
+            <c:Begin>2022-01-01</c:Begin>
+            <c:End>2022-01-31</c:End>
+          </c:Period>
+          <c:Category>Requests</c:Category>
+          <c:Instance>
+            <c:MetricType>ft_pdf</c:MetricType>
+            <c:Count>712</c:Count>
+          </c:Instance>
+        </c:ItemPerformance>
+        <c:ItemPerformance>
+          <c:Period>
+            <c:Begin>2022-02-01</c:Begin>
+            <c:End>2022-02-28</c:End>
+          </c:Period>
+          <c:Category>Requests</c:Category>
+          <c:Instance>
+            <c:MetricType>ft_pdf</c:MetricType>
+            <c:Count>544</c:Count>
+          </c:Instance>
+        </c:ItemPerformance>
+      </c:ReportItems>
+    </c:Customer>
+  </c:Report>
+</sc:Report>
+</sc:ReportResponse>
