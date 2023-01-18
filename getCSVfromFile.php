@@ -53,6 +53,7 @@ function queryString () {
 }
 
 function cargarXML($url) {
+    printf ("Getting: $url\n");
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
