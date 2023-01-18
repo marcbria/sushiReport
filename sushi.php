@@ -1,75 +1,74 @@
 <?php
+
 class SushiReport {
-    private $base_url;
+
+    // Variables de configuración
+    private $base_urls;
+    private $xslt_filename;
     private $report;
     private $release;
     private $begin_date;
     private $end_date;
-    private $queryString;
-    private $config;
 
-    public function __construct() {
-        $this->config = json_decode(file_get_contents('config.json'), true);
-        $this->base_url = $this->config['base_url'];
-        $this->report = $this->config['report'];
-        $this->release = $this->config['release'];
-        $this->begin_date = $this->config['begin_date'];
-        $this->end_date = $this->config['end_date'];
-        $this->queryString = "/sushiLite/v1_7/GetReport?Report=$this->report&Release=$this->release&BeginDate=$this->begin_date&EndDate=$this->end_date";
+    public function __construct()
+    {
+        $config = json_decode(file_get_contents('config.json'), true);
+        $this->base_urls = $config['base_urls'];
+        $this->xslt_filename = $config['xslt_filename'];
+        $this->report = $config['report'];
+        $this->release = $config['release'];
+        $this->begin_date = $config['begin_date'];
+        $this->end_date = $config['end_date'];
     }
-    
+
     public function main() {
-        $this->checkDependencies();
-        $url = $this->base_url . $this->queryString;
-        printf("===========================================================\n");
-        printf("Processing: $url \n");
-        printf("===========================================================\n");
-        
-        $xsl = new DOMDocument();
-        $xsl->load("sushi-xml2csv.xslt");
-        
-        $xml = new DOMDocument();
-        $xml = $this->cargarXML($url);
-        $proc = new XSLTProcessor();
-        $proc->importStylesheet($xsl);
-        echo $proc->transformToXML($xml);
-    }
 
-    private function checkDependencies() {
-        if (function_exists('curl_init')) {
-            echo 'cURL is installed';
-        } else {
-            echo 'cURL is not installed';
-            die();
+        $this->checkRequirements();
+
+        // Recorremos las urls base
+        foreach ($this->base_urls as $base_url) {
+            $url = $base_url . $this->queryString();
+
+            $xsl = new DOMDocument();
+            $xsl->load($this->xslt_filename);
+
+            $xml = new DOMDocument();
+            $xml = $this->cargarXML($url);
+            $proc = new XSLTProcessor();
+            $proc->importStylesheet($xsl);
+            echo $proc->transformToXML($xml);
         }
     }
 
-    private function cargarXML($url) {
+    public function checkRequirements () {
+        if (!extension_loaded('curl')) {
+            die("Error: cURL extension not loaded.");
+        }
+        if (!extension_loaded('xml')) {
+            die("Error: xml extension not loaded.");
+        }
+    }
+
+    public function queryString () {
+        $queryString = "/sushiLite/v1_7/GetReport?".
+		"Report=$this->report&".
+		"Release=$this->release&".
+		"BeginDate=$this->begin_date&".
+		"EndDate=$this->end_date";
+        return $queryString;
+    }
+
+    public function cargarXML($url) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         $result = curl_exec($curl);
-        curl_close($curl);
-        if ($result === false) {
-            echo "Error loading XML: " . curl_error($curl);
-            return;
-        }
-        $xml = new DOMDocument();
-        $xml->loadXML($result);
-        return $xml;
-    }
-
-    private function cargarXML2($url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        $result = curl_exec($curl);
-        curl_close($curl);
-        return $result;
+	curl_close($curl);
+	$xml = new DOMDocument();
+	$xml->loadXML($result);
+	return $xml;
     }
 }
 

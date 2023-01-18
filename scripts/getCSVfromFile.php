@@ -39,7 +39,6 @@ function checkDependencies () {
         echo 'cURL is not installed';
         die();
     }
-
 }
 
 
