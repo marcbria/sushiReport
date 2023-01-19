@@ -1,5 +1,5 @@
 # sushiReport
-A small harvester that collects COUNTER statistics from multiple OJS (sushi-lite plugin required).
+A small harvester that collects COUNTER statistics from multiple OJS (sushi-lite plugin required) and returns data in CSV format.
 
 # Syntax
 ```
