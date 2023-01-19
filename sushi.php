@@ -18,9 +18,8 @@ class SushiReport {
     // Sushi constructor: Set the variables from the config file.
     public function __construct($config_file = 'config.json')
     {
-        if (!file_exists($config_file)) {
-            die("Error: config file not found");
-        }
+
+        $this->checkConfigFile($config_file);
         $config = json_decode(file_get_contents($config_file), true);
         $this->base_urls = $config['base_urls'];
         $this->xslt_filename = $config['xslt_filename'];
@@ -42,7 +41,7 @@ class SushiReport {
             printf("\n--> Processing journal: $journal");
 
             // Cargamos y procesamos el xml de cada revista
-	    $result = $this->loadXML($journal_url, $this->xslt_filename);
+            $result = $this->loadXML($journal_url, $this->xslt_filename);
 
             if ( $result == "" ) {
                 $result = "No data avaliable: Probably sushi-lite plugin is not enabled in $journal";
@@ -51,6 +50,16 @@ class SushiReport {
 	    //file_put_contents("result-" . $this->$config_file . ".csv", $result);
             echo "$result";
 
+        }
+    }
+
+    // Helper to check php requirements.
+    public function checkConfigFile ($config_file = 'config.json') {
+        if (!file_exists($config_file)) {
+            printf ("\nError: config file [$config_file] not found.\n\n");
+            printf ("Check file name and permisions and the syntax of your call:\n");
+            printf ("  $ php sushi yourConfigFile.json\n");
+            die();
         }
     }
 
