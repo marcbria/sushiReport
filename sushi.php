@@ -33,7 +33,7 @@ class SushiReport {
             $this->end_date = date('d.m.Y',strtotime("-1 days"));
         }
 
-        //$this->showConfig();
+        $this->showConfig($config_file);
     }
 
     // Sushi runner: Gets xml from each journal and process it to return a CSV.  
@@ -44,25 +44,24 @@ class SushiReport {
         // Getting the full journal list
         foreach ($this->base_urls as $journal => $base_url) {
 
-            printf("\n--> Processing journal: $journal\n");
+            printf("--> Processing journal: $journal");
 
             // Cargamos y procesamos el xml de cada revista
             $result = $this->loadXML($journal, $this->xslt_filename);
          
-
 	        //file_put_contents("result-" . $this->$config_file . ".csv", $result);
-            echo "$result";
+            printf ("$result\n\n");
 
         }
     }
 
-    public function showConfig () {
+    public function showConfig ($config_file = "config.json") {
 
         printf ("  - Config file: " . $config_file . "\n");
         printf ("  - XSLT file:   " . $this->xslt_filename . "\n");
         printf ("  - Base urls:   " . count($this->base_urls) . "\n");
-        printf ("  - Report:      " . $this->report = $config['report']. "\n");
-        printf ("  - Release:     " . $this->release = $config['release']. "\n");
+        printf ("  - Report:      " . $this->report . "\n");
+        printf ("  - Release:     " . $this->release . "\n");
 
     }
 
@@ -138,7 +137,7 @@ class SushiReport {
         $result = $proc->transformToXML($xml);
 
         if ( trim($result) == "" ) {
-            $result = "No data avaliable: Probably sushi-lite plugin is not enabled in $journal\n";
+            $result = "\nNo data avaliable: Probably sushi-lite plugin is not enabled in $journal";
         }
 
         return $result;
@@ -168,4 +167,4 @@ printf("> Harvesting and processing...\n");
 $sushiReport = new SushiReport($config_file, $period);
 $sushiReport->run();
 
-printf ("\n\n> Process FINISHED!\n");
+printf ("> Process FINISHED!\n");
