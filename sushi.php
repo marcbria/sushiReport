@@ -16,7 +16,7 @@ class SushiReport {
     private $end_date;
 
     // Sushi constructor: Set the variables from the config file.
-    public function __construct($config_file = 'config.json')
+    public function __construct($config_file = 'config.json', $period)
     {
 
         $this->checkConfigFile($config_file);
@@ -27,6 +27,13 @@ class SushiReport {
         $this->release = $config['release'];
         $this->begin_date = $config['begin_date'];
         $this->end_date = $config['end_date'];
+
+        if ($period == "yesterday") {
+            $this->begin_date = date('d.m.Y',strtotime("-1 days"));
+            $this->end_date = date('d.m.Y',strtotime("-1 days"));
+        }
+
+        //$this->showConfig();
     }
 
     // Sushi runner: Gets xml from each journal and process it to return a CSV.  
@@ -36,21 +43,27 @@ class SushiReport {
 
         // Getting the full journal list
         foreach ($this->base_urls as $journal => $base_url) {
-            $journal_url = $base_url . $this->queryString();
 
-            printf("\n--> Processing journal: $journal");
+            printf("\n--> Processing journal: $journal\n");
 
             // Cargamos y procesamos el xml de cada revista
-            $result = $this->loadXML($journal_url, $this->xslt_filename);
+            $result = $this->loadXML($journal, $this->xslt_filename);
+         
 
-            if ( $result == "" ) {
-                $result = "No data avaliable: Probably sushi-lite plugin is not enabled in $journal";
-            }
-
-	    //file_put_contents("result-" . $this->$config_file . ".csv", $result);
+	        //file_put_contents("result-" . $this->$config_file . ".csv", $result);
             echo "$result";
 
         }
+    }
+
+    public function showConfig () {
+
+        printf ("  - Config file: " . $config_file . "\n");
+        printf ("  - XSLT file:   " . $this->xslt_filename . "\n");
+        printf ("  - Base urls:   " . count($this->base_urls) . "\n");
+        printf ("  - Report:      " . $this->report = $config['report']. "\n");
+        printf ("  - Release:     " . $this->release = $config['release']. "\n");
+
     }
 
     // Helper to check php requirements.
@@ -96,17 +109,20 @@ class SushiReport {
     }
 
     // Helper to load the XML from the specified url and process it with the specified xslt file.
-    public function loadXML($url, $xslt_filename) {
+    public function loadXML($journal, $xslt_filename) {
+
+        $url = $this->base_urls[$journal] . $this->queryString();
+
         // Cargamos el XML desde la URL (gestión de errores).
         $xml_string = $this->getXML($url);
         if ($xml_string === false) {
-            die("Error loading XML");
+            die("Error loading XML\n");
         }
 
         // Cargamos el XSLT indicado en el config.json
         $xsl = new DOMDocument();
         if (!file_exists($xslt_filename)) {
-            die("Error: xslt_file not found");
+            die("Error: xslt_file not found\n");
         }
         $xsl->load($xslt_filename);
 
@@ -119,7 +135,13 @@ class SushiReport {
         $proc->importStylesheet($xsl);
 
         // Realizamos la transformación y devolvemos el resultado
-        return $proc->transformToXML($xml);
+        $result = $proc->transformToXML($xml);
+
+        if ( trim($result) == "" ) {
+            $result = "No data avaliable: Probably sushi-lite plugin is not enabled in $journal\n";
+        }
+
+        return $result;
     }
 
 
@@ -136,9 +158,14 @@ if(isset($argv[1])){
     $config_file = $argv[1];
 }
 
+$period = "";
+if(isset($argv[2])){
+    $period = $argv[2];
+}
+
 printf("> Harvesting and processing...\n");
 
-$sushiReport = new SushiReport($config_file);
+$sushiReport = new SushiReport($config_file, $period);
 $sushiReport->run();
 
 printf ("\n\n> Process FINISHED!\n");
