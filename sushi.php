@@ -1,5 +1,10 @@
 <?php
 
+
+/**
+ * Class Sushi
+ * Gets xml from each journal and process it to return a CSV.
+ */
 class SushiReport {
 
     // Variables de configuración
@@ -10,6 +15,7 @@ class SushiReport {
     private $begin_date;
     private $end_date;
 
+    // Sushi constructor: Set the variables from the config file.
     public function __construct($config_file = 'config.json')
     {
         if (!file_exists($config_file)) {
@@ -24,21 +30,31 @@ class SushiReport {
         $this->end_date = $config['end_date'];
     }
 
+    // Sushi runner: Gets xml from each journal and process it to return a CSV.  
     public function run() {
 
         $this->checkRequirements();
 
-        // Recorremos las urls base
-        foreach ($this->base_urls as $base_url) {
-            $url = $base_url . $this->queryString();
+        // Getting the full journal list
+        foreach ($this->base_urls as $journal => $base_url) {
+            $journal_url = $base_url . $this->queryString();
 
-	    $result = $this->loadXML($url, $this->xslt_filename);
-	    echo $result;
-	    //file_put_contents("result.xml", $result);
+            printf("\n--> Processing journal: $journal");
+
+            // Cargamos y procesamos el xml de cada revista
+	    $result = $this->loadXML($journal_url, $this->xslt_filename);
+
+            if ( $result == "" ) {
+                $result = "No data avaliable: Probably sushi-lite plugin is not enabled in $journal";
+            }
+
+	    //file_put_contents("result-" . $this->$config_file . ".csv", $result);
+            echo "$result";
 
         }
     }
 
+    // Helper to check php requirements.
     public function checkRequirements () {
         if (!extension_loaded('curl')) {
             die("Error: cURL extension not loaded.");
@@ -48,6 +64,7 @@ class SushiReport {
         }
     }
 
+    // Helper to build the query string.
     public function queryString () {
         $queryString = "/sushiLite/v1_7/GetReport?".
                 "Report=$this->report&".
@@ -57,6 +74,7 @@ class SushiReport {
         return $queryString;
     }
 
+    // Helper to get the XML via curl.
     public function getXML($url) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -68,6 +86,7 @@ class SushiReport {
         return $result;
     }
 
+    // Helper to load the XML from the specified url and process it with the specified xslt file.
     public function loadXML($url, $xslt_filename) {
         // Cargamos el XML desde la URL (gestión de errores).
         $xml_string = $this->getXML($url);
@@ -97,16 +116,20 @@ class SushiReport {
 
 }
 
-echo "--> Start harvasting...";
+/************
+ *   Main   * 
+ ************/
+
+printf("> Loading configuration...\n");
 
 $config_file = "config.json";
 if(isset($argv[1])){
     $config_file = $argv[1];
 }
 
-echo "--> Processing files...";
+printf("> Harvesting and processing...\n");
 
 $sushiReport = new SushiReport($config_file);
 $sushiReport->run();
 
-echo "--> Process finished";
+printf ("\n\n> Process FINISHED!\n");

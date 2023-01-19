@@ -3,7 +3,7 @@
 <xsl:output method="text" encoding="UTF-8" />
 
 <xsl:template match="/">
-    <xsl:text>Institution, ISSN, Begin, End, Category, MetricType, Count</xsl:text>
+    <!-- xsl:text>Institution, ISSN, Begin, End, Category, MetricType, Count</xsl:text-->
     <xsl:text>&#xA;</xsl:text>
     <xsl:variable name="journal" select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ItemIdentifier[c:Type='Proprietary']/c:Value" />
     <xsl:for-each select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ItemPerformance">
