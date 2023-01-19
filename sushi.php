@@ -8,21 +8,23 @@
 class SushiReport {
 
     // Variables de configuración
+    private $config_file;
+    private $xslt_file;
     private $base_urls;
-    private $xslt_filename;
     private $report;
     private $release;
     private $begin_date;
     private $end_date;
 
-    // Sushi constructor: Set the variables from the config file.
-    public function __construct($config_file = 'config.json', $period)
+    // Sushi constructor: Set the variables from parameters and/or config file.
+    public function __construct($config_file, $period = null)
     {
 
+        $this->config_file=$config_file;
         $this->checkConfigFile($config_file);
-        $config = json_decode(file_get_contents($config_file), true);
+        $config = json_decode(file_get_contents($this->config_file), true);
         $this->base_urls = $config['base_urls'];
-        $this->xslt_filename = $config['xslt_filename'];
+        $this->xslt_file = "config/" . $config['xslt_file'];
         $this->report = $config['report'];
         $this->release = $config['release'];
         $this->begin_date = $config['begin_date'];
@@ -33,7 +35,7 @@ class SushiReport {
             $this->end_date = date('d.m.Y',strtotime("-1 days"));
         }
 
-        $this->showConfig($config_file);
+        $this->showConfig();
     }
 
     // Sushi runner: Gets xml from each journal and process it to return a CSV.  
@@ -47,28 +49,30 @@ class SushiReport {
             printf("--> Processing journal: $journal");
 
             // Cargamos y procesamos el xml de cada revista
-            $result = $this->loadXML($journal, $this->xslt_filename);
+            $result = $this->loadXML($journal, $this->xslt_file);
          
-	        //file_put_contents("result-" . $this->$config_file . ".csv", $result);
+	        //file_put_contents("result-" . $this->config_file . ".csv", $result);
             printf ("$result\n\n");
 
         }
     }
 
-    public function showConfig ($config_file = "config.json") {
+    public function showConfig () {
 
-        printf ("  - Config file: " . $config_file . "\n");
-        printf ("  - XSLT file:   " . $this->xslt_filename . "\n");
+        printf ("\n====================================================\n");
+        printf ("  - Config file: " . $this->config_file . "\n");
+        printf ("  - XSLT file:   " . $this->xslt_file . "\n");
         printf ("  - Base urls:   " . count($this->base_urls) . "\n");
         printf ("  - Report:      " . $this->report . "\n");
         printf ("  - Release:     " . $this->release . "\n");
+        printf ("====================================================\n\n");
 
     }
 
     // Helper to check php requirements.
-    public function checkConfigFile ($config_file = 'config.json') {
-        if (!file_exists($config_file)) {
-            printf ("\nError: config file [$config_file] not found.\n\n");
+    public function checkConfigFile () {
+        if (!file_exists($this->config_file)) {
+            printf ("\nError: config file [$this->config_file] not found.\n\n");
             printf ("Check file name and permisions and the syntax of your call:\n");
             printf ("  $ php sushi yourConfigFile.json\n");
             die();
@@ -108,7 +112,7 @@ class SushiReport {
     }
 
     // Helper to load the XML from the specified url and process it with the specified xslt file.
-    public function loadXML($journal, $xslt_filename) {
+    public function loadXML($journal) {
 
         $url = $this->base_urls[$journal] . $this->queryString();
 
@@ -120,10 +124,13 @@ class SushiReport {
 
         // Cargamos el XSLT indicado en el config.json
         $xsl = new DOMDocument();
-        if (!file_exists($xslt_filename)) {
+        if (!file_exists($this->xslt_file)) {
             die("Error: xslt_file not found\n");
         }
-        $xsl->load($xslt_filename);
+        printf ("\n\n==========[");
+        echo $this->xslt_file ;
+        printf ("]==========\n");
+        $xsl->load($this->xslt_file);
 
         // Creamos un nuevo documento y cargamos el XML
         $xml = new DOMDocument();
@@ -152,7 +159,7 @@ class SushiReport {
 
 printf("> Loading configuration...\n");
 
-$config_file = "config.json";
+$config_file = "config/config.json";
 if(isset($argv[1])){
     $config_file = $argv[1];
 }

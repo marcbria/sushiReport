@@ -1,5 +1,5 @@
 {
-    "xslt_filename": "sushi-xml2csv.xslt",
+    "xslt_file": "sushi-xml2csv.xslt",
     "report": "JR1",
     "release": "4.1",
     "begin_date": "2022-01-01",
