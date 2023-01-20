@@ -43,6 +43,8 @@ class SushiReport {
 
         $this->checkRequirements();
 
+        printf("> Harvesting and processing...\n");
+
         // Getting the full journal list
         foreach ($this->base_urls as $journal => $base_url) {
 
@@ -127,9 +129,6 @@ class SushiReport {
         if (!file_exists($this->xslt_file)) {
             die("Error: xslt_file not found\n");
         }
-        printf ("\n\n==========[");
-        echo $this->xslt_file ;
-        printf ("]==========\n");
         $xsl->load($this->xslt_file);
 
         // Creamos un nuevo documento y cargamos el XML
@@ -168,8 +167,6 @@ $period = "";
 if(isset($argv[2])){
     $period = $argv[2];
 }
-
-printf("> Harvesting and processing...\n");
 
 $sushiReport = new SushiReport($config_file, $period);
 $sushiReport->run();

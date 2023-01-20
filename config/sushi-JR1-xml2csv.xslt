@@ -6,8 +6,19 @@
     <!-- xsl:text>Institution, ISSN, Begin, End, Category, MetricType, Count</xsl:text-->
     <xsl:text>&#xA;</xsl:text>
     <xsl:variable name="journal" select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ItemIdentifier[c:Type='Proprietary']/c:Value" />
+
     <xsl:for-each select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ItemPerformance">
-        <xsl:value-of select="$journal"/>,<xsl:value-of select="c:Period/c:Begin"/>,<xsl:value-of select="c:Period/c:End"/>,<xsl:value-of select="c:Category" />,<xsl:value-of select="c:Instance/c:MetricType" />,<xsl:value-of select="c:Instance/c:Count" />
+        <xsl:value-of select="$journal"/>
+        <xsl:text>,</xsl:text>
+        <xsl:value-of select="c:Period/c:Begin"/>
+        <xsl:text>,</xsl:text>
+        <xsl:value-of select="c:Period/c:End"/>
+        <xsl:text>,</xsl:text>
+        <xsl:value-of select="c:Category" />
+        <xsl:text>,</xsl:text>
+        <xsl:value-of select="c:Instance/c:MetricType" />
+        <xsl:text>,</xsl:text>
+        <xsl:value-of select="c:Instance/c:Count" />
         <xsl:if test="position() != last()">
             <xsl:text>&#xA;</xsl:text>
         </xsl:if>

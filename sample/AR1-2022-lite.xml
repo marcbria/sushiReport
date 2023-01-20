@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<sc:ReportResponse xmlns:sc="http://www.niso.org/schemas/sushi/counter" xmlns:s="http://www.niso.org/schemas/sushi" xmlns:c="http://www.niso.org/schemas/counter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.niso.org/schemas/sushi http://www.niso.org/schemas/sushi/sushi1_7.xsd http://www.niso.org/schemas/sushi/counter http://www.niso.org/schemas/sushi/sushi_counter4_1.xsd ">
+  <s:Requestor>
+    <s:ID>anonymous</s:ID>
+    <s:Name/>
+    <s:Email/>
+  </s:Requestor>
+  <s:CustomerReference>
+    <s:ID/>
+  </s:CustomerReference>
+  <s:ReportDefinition Name="AR1" Release="4.1">
+    <s:Filters>
+      <s:UsageDateRange>
+        <s:Begin>2022-12-01</s:Begin>
+        <s:End>2022-12-01</s:End>
+      </s:UsageDateRange>
+    </s:Filters>
+  </s:ReportDefinition>
+  <sc:Report>
+  <c:Report xmlns="http://www.niso.org/schemas/counter" Created="2023-01-19T04:00:54+01:00" ID="B6DD34C3-E33C-42F5-9060-EFBB106839EA" Version="4_1" Name="AR1" Title="Informe de art&#xED;culo 1">
+    <c:Vendor>
+      <c:Name>Universitat Aut&#xF2;noma de Barcelona</c:Name>
+      <c:ID>https://revistes.uab.cat/anuarioiet</c:ID>
+      <c:Contact>
+        <c:Contact>Isabel Hern&#xE1;ndez de la Rosa</c:Contact>
+        <c:E-mail>anuario.iet@uab.cat</c:E-mail>
+      </c:Contact>
+      <c:WebSiteUrl>https://revistes.uab.cat/anuarioiet</c:WebSiteUrl>
+    </c:Vendor>
+    <c:Customer>
+      <c:Name>Todos los clientes/as</c:Name>
+      <c:ID>0</c:ID>
+      <c:ReportItems>
+        <c:ParentItem>
+          <c:ItemIdentifier>
+            <c:Type>Online_ISSN</c:Type>
+            <c:Value>2339-5753</c:Value>
+          </c:ItemIdentifier>
+          <c:ItemIdentifier>
+            <c:Type>Proprietary</c:Type>
+            <c:Value>anuarioiet</c:Value>
+          </c:ItemIdentifier>
+          <c:ItemName>Anuario IET de Trabajo y Relaciones Laborales</c:ItemName>
+          <c:ItemDataType>Journal</c:ItemDataType>
+        </c:ParentItem>
+        <c:ItemIdentifier>
+          <c:Type>Proprietary</c:Type>
+          <c:Value>109</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemIdentifier>
+          <c:Type>DOI</c:Type>
+          <c:Value>10.5565/rev/aiet.109</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemPlatform>Open Journal Systems</c:ItemPlatform>
+        <c:ItemName>La desconexi&#xF3;n digital en el teletrabajo como medida de prevenci&#xF3;n de los riesgos psicosociales</c:ItemName>
+        <c:ItemDataType>Article</c:ItemDataType>
+        <c:ItemPerformance>
+          <c:Period>
+            <c:Begin>2022-12-01</c:Begin>
+            <c:End>2022-12-31</c:End>
+          </c:Period>
+          <c:Category>Requests</c:Category>
+          <c:Instance>
+            <c:MetricType>ft_total</c:MetricType>
+            <c:Count>1</c:Count>
+          </c:Instance>
+        </c:ItemPerformance>
+      </c:ReportItems>
+      <c:ReportItems>
+        <c:ParentItem>
+          <c:ItemIdentifier>
+            <c:Type>Online_ISSN</c:Type>
+            <c:Value>2339-5753</c:Value>
+          </c:ItemIdentifier>
+          <c:ItemIdentifier>
+            <c:Type>Proprietary</c:Type>
+            <c:Value>anuarioiet</c:Value>
+          </c:ItemIdentifier>
+          <c:ItemName>Anuario IET de Trabajo y Relaciones Laborales</c:ItemName>
+          <c:ItemDataType>Journal</c:ItemDataType>
+        </c:ParentItem>
+        <c:ItemIdentifier>
+          <c:Type>Proprietary</c:Type>
+          <c:Value>108</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemIdentifier>
+          <c:Type>DOI</c:Type>
+          <c:Value>10.5565/rev/aiet.108</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemPlatform>Open Journal Systems</c:ItemPlatform>
+        <c:ItemName>Reversi&#xF3;n y fijeza (condicionada) del personal subrogado</c:ItemName>
+        <c:ItemDataType>Article</c:ItemDataType>
+        <c:ItemPerformance>
+          <c:Period>
+            <c:Begin>2022-12-01</c:Begin>
+            <c:End>2022-12-31</c:End>
+          </c:Period>
+          <c:Category>Requests</c:Category>
+          <c:Instance>
+            <c:MetricType>ft_total</c:MetricType>
+            <c:Count>1</c:Count>
+          </c:Instance>
+        </c:ItemPerformance>
+      </c:ReportItems>
+      <c:ReportItems>
+        <c:ParentItem>
+          <c:ItemIdentifier>
+            <c:Type>Online_ISSN</c:Type>
+            <c:Value>2339-5753</c:Value>
+          </c:ItemIdentifier>
+          <c:ItemIdentifier>
+            <c:Type>Proprietary</c:Type>
+            <c:Value>anuarioiet</c:Value>
+          </c:ItemIdentifier>
+          <c:ItemName>Anuario IET de Trabajo y Relaciones Laborales</c:ItemName>
+          <c:ItemDataType>Journal</c:ItemDataType>
+        </c:ParentItem>
+        <c:ItemIdentifier>
+          <c:Type>Proprietary</c:Type>
+          <c:Value>107</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemIdentifier>
+          <c:Type>DOI</c:Type>
+          <c:Value>10.5565/rev/aiet.107</c:Value>
+        </c:ItemIdentifier>
+        <c:ItemPlatform>Open Journal Systems</c:ItemPlatform>
+        <c:ItemName>La clasificaci&#xF3;n de los empleados p&#xFA;blicos tras la ley 20/2021 de reducci&#xF3;n del empleo p&#xFA;blico y el RD-ley 32/2021 de reforma del mercado de trabajo</c:ItemName>
+        <c:ItemDataType>Article</c:ItemDataType>
+        <c:ItemPerformance>
+          <c:Period>
+            <c:Begin>2022-12-01</c:Begin>
+            <c:End>2022-12-31</c:End>
+          </c:Period>
+          <c:Category>Requests</c:Category>
+          <c:Instance>
+            <c:MetricType>ft_total</c:MetricType>
+            <c:Count>1</c:Count>
+          </c:Instance>
+        </c:ItemPerformance>
+      </c:ReportItems>
+    </c:Customer>
+  </c:Report>
+</sc:Report>
+</sc:ReportResponse>
+

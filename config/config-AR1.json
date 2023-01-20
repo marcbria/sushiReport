@@ -1,11 +1,11 @@
 {
-    "xslt_file": "sushi-AR1-xml2csv.xslt",
+    "xslt_file": "sushi-JR1-xml2csv.xslt",
     "report": "AR1",
     "release": "4.1",
     "begin_date": "2022-01-01",
-    "end_date": "2022-12-31",
+    "end_date": "2022-01-02",
     "base_urls": {
-            "analisi": "https://analisi.cat",
 	    "periodicum": "https://revistes.uab.cat/periodicum",
+	    "anuarioiet": "https://revistes.uab.cat/anuarioiet"
     }
 }

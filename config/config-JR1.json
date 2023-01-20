@@ -5,7 +5,6 @@
     "begin_date": "2022-01-01",
     "end_date": "2022-12-31",
     "base_urls": {
-            "analisi": "https://analisi.cat",
 	    "periodicum": "https://revistes.uab.cat/periodicum",
 	    "anuarioiet": "https://revistes.uab.cat/anuarioiet"
     }

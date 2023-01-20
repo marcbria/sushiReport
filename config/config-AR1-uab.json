@@ -1,6 +1,6 @@
 {
-    "xslt_file": "sushi-xml2csv.xslt",
-    "report": "JR1",
+    "xslt_file": "sushi-AR1-xml2csv.xslt",
+    "report": "AR1",
     "release": "4.1",
     "begin_date": "2022-01-01",
     "end_date": "2022-12-31",
