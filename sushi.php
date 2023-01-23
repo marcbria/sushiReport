@@ -31,8 +31,8 @@ class SushiReport {
         $this->end_date = $config['end_date'];
 
         if ($period == "yesterday") {
-            $this->begin_date = date('d.m.Y',strtotime("-1 days"));
-            $this->end_date = date('d.m.Y',strtotime("-1 days"));
+            $this->begin_date = date('Y-m-d',strtotime("-1 days"));
+            $this->end_date = date('Y-m-d',strtotime("-1 days"));
         }
 
         $this->showConfig();
@@ -65,6 +65,7 @@ class SushiReport {
         printf ("  - Config file: " . $this->config_file . "\n");
         printf ("  - XSLT file:   " . $this->xslt_file . "\n");
         printf ("  - Base urls:   " . count($this->base_urls) . "\n");
+        printf ("  - Date range:  " . $this->begin_date . " to " . $this->end_date . "\n");
         printf ("  - Report:      " . $this->report . "\n");
         printf ("  - Release:     " . $this->release . "\n");
         printf ("====================================================\n\n");

@@ -2,8 +2,8 @@
     "xslt_file": "sushi-JR1-xml2csv.xslt",
     "report": "JR1",
     "release": "4.1",
-    "begin_date": "2022-01-01",
-    "end_date": "2022-12-31",
+    "begin_date": "2023-01-22",
+    "end_date": "2023-01-22",
     "base_urls": {
 	    "periodicum": "https://revistes.uab.cat/periodicum",
 	    "anuarioiet": "https://revistes.uab.cat/anuarioiet"

@@ -8,7 +8,7 @@
 
     <xsl:for-each select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ItemPerformance">
 
-      <xsl:value-of select="../c:ItemIdentifier[c:Type='Proprietary']/c:Value"/>
+    <xsl:value-of select="../c:ItemIdentifier[c:Type='Proprietary']/c:Value"/>
       <xsl:text>,</xsl:text>
       <xsl:value-of select="c:Period/c:Begin"/>
       <xsl:text>,</xsl:text>
