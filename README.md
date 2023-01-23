@@ -3,8 +3,12 @@ A small harvester that collects COUNTER statistics from multiple OJS (sushi-lite
 
 # Syntax
 ```
-$ php sushi.php [configfile.json]
+$ php sushi.php [<configfile.json> [yesterday]]
 ```
+
+- configfile.json: path to the config file. Default assumes ./config.json.
+- yesterday: Overwrites config dates to be "yesteday". Useful for cron daily calls.
+
 
 # Config 
 
@@ -51,9 +55,9 @@ We defined two config files:
 - config-AR1.json: Daily range, with our full list of journals and AR1 data.
 
 We created two daily crons (at 00:30 and 00:40) calling the script with those
-two config files.
+two config files with "yesterday" parameter.
 
-Data is saved to a public web folder to let us (and editors) download it.
+Data is appened to files in a public web folder to let us (and editors) download it.
 
 # Dependencies
 PHP 7+ (with php-xml, php-curl)
