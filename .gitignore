@@ -1,4 +1,4 @@
 *.swp
 config/journals.lst
-config/configJR-uab.json
-config/configAR-uab.json
+config/config-JR1-uab.json
+config/config-AR1-uab.json
