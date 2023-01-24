@@ -33,9 +33,24 @@ $ php sushi.php [<configfile.json> [yesterday]]
 }
 ```
 
+# Installation
+
+## Host
+
+1. Ensure your host fits the requeriments.
+2. Clone the repository locally.
+3. Configure the application (see the examples in ./config/)
+4. Run the script (see the syntax)
+
+## Docker (recommened)
+
+Ensure you have docker installed and run:
+
+
+
 # Cases of use
 
-## Service usage
+## Service global usage
 
 As a publishing service, we like to know the usage of all our journals. 
 As far as we have multiple (single-tenant) OJS installations, we need

@@ -8,9 +8,6 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
 && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install xml \
-    && docker-php-ext-install curl
-
 COPY . /usr/src/sushiReportApp
 WORKDIR /usr/src/sushiReport
 
