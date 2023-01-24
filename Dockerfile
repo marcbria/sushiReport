@@ -1,4 +1,4 @@
-FROM php:8.1-cli
+FROM php:7-cli
 
 RUN apt-get update && apt-get install -y \
     libxml2-dev \
@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     libssl-dev \
 && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install xml \
+    && docker-php-ext-install curl
 
 COPY . /usr/src/sushiReport
 WORKDIR /usr/src/sushiReport
