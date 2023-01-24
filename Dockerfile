@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
 && rm -rf /var/lib/apt/lists/*
 
-COPY . /usr/src/sushiReportApp
+COPY . /usr/src/sushiReport
 WORKDIR /usr/src/sushiReport
 
 CMD [ "php", "./sushi.php" ]
