@@ -2,7 +2,7 @@
 
 
 /**
- * Class Sushi
+ * Class SushiReport
  * Gets xml from each journal and process it to return a CSV.
  */
 class SushiReport {
@@ -77,7 +77,7 @@ class SushiReport {
         if (!file_exists($this->config_file)) {
             printf ("\nError: config file [$this->config_file] not found.\n\n");
             printf ("Check file name and permisions and the syntax of your call:\n");
-            printf ("  $ php sushi yourConfigFile.json\n");
+            printf ("  $ php sushiReport.php yourConfig.json\n");
             die();
         }
     }
