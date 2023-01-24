@@ -9,8 +9,7 @@ RUN apt-get update && apt-get install -y \
 && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install xml \
-    && docker-php-ext-install curl \
-    && docker-php-ext-enable xsl
+    && docker-php-ext-install curl 
 
 COPY . /usr/src/sushiReport
 WORKDIR /usr/src/sushiReport

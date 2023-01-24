@@ -35,26 +35,38 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
 
 # Installation
 
-## Host
+## Host 
 
 1. Ensure your host fits the requeriments.
+
+   ```
+   $ php -v | grep cli \
+     && echo "PLUGINS: " \
+     && php -m | grep -q xml && echo "XML:  Found" || echo "XML: Not found" \
+     && php -m | grep -q xml && echo "XML:  Found" || echo "XML: Not found" \
+     && php -m | grep -q curl && echo "cURL: Found" || echo "cURL: Not found" 
+   ```
+
 2. Clone the repository locally.
 3. Configure the application (see the examples in ./config/)
 4. Run the script (see the syntax)
 
-## Docker (recommened)
+## Docker
 
 Ensure you have docker installed and 
 
 1. Clone the repository locally:
 
 2. Add or modify config files and build your image:
+
 ```$ docker build -t sushi-report:latest .```
 
 3. Test the container and see syntax:
+
 ```$ docker run --rm -i sushi-report:latest php sushiReport.php```
 
 4. Run it with your own parameters:
+
 ```$ docker run --rm -i sushi-report:latest php sushiReport.php```
 
 <!-- TODO: Alternatively, you can avoid all this steps using the image in docker hub
