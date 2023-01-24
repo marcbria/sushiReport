@@ -3,7 +3,7 @@ A small harvester that collects COUNTER statistics from multiple OJS (sushi-lite
 
 # Syntax
 ```
-$ php sushi.php [<configfile.json> [yesterday]]
+$ php sushiReport.php [<configfile.json> [yesterday]]
 ```
 
 - configfile.json: path to the config file. Default assumes ./config.json.
@@ -44,9 +44,22 @@ $ php sushi.php [<configfile.json> [yesterday]]
 
 ## Docker (recommened)
 
-Ensure you have docker installed and run:
+Ensure you have docker installed and 
 
+1. Clone the repository locally:
 
+2. Add or modify config files and build your image:
+```$ docker build -t sushi-report:latest .```
+
+3. Test the container and see syntax:
+```$ docker run --rm -i sushi-report:latest php sushiReport.php```
+
+4. Run it with your own parameters:
+```$ docker run --rm -i sushi-report:latest php sushiReport.php```
+
+<!-- TODO: Alternatively, you can avoid all this steps using the image in docker hub
+and creating a file volume with your personalized config.json:
+```$ docker run --rm -v "$(pwd)"/myconfig.json:/usr/share/sushiReport/config.json:ro``` -->
 
 # Cases of use
 
