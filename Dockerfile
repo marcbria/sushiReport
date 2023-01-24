@@ -14,5 +14,5 @@ RUN docker-php-ext-install xml \
 COPY . /usr/src/sushiReport
 WORKDIR /usr/src/sushiReport
 
-CMD [ "php", "./sushi.php" ]
+CMD [ "php", "./sushiReport.php" ]
 
