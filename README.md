@@ -6,18 +6,18 @@ A small harvester that collects COUNTER statistics from multiple OJS (sushi-lite
 $ php sushiReport.php [<configfile.json> [yesterday]]
 ```
 
-- configfile.json: path to the config file. Default assumes ./config.json.
-- yesterday: Overwrites config dates to be "yesteday". Useful for cron daily calls.
+- ```configfile.json```: path to the config file. Default assumes ./config.json.
+- ```yesterday```: Overwrites config dates to be "yesteday". Useful for cron daily calls.
 
 
 # Config 
 
-- xslt_filename: name of the xsl transformations file.
-- report: sushi report type (JR1, AR1).
-- release: release number (ie: 4.1).
-- begin_date: starting period.
-- end_date: end period.
-- base_url: array with the base urls of the journals to collect.
+- ```xslt_filename```: name of the xsl transformations file.
+- ```report```: sushi report type (JR1, AR1).
+- ```release```: release number (ie: 4.1).
+- ```begin_date```: starting period.
+- ```end_date```: end period.
+- ```base_url```: array with the base urls of the journals to collect.
 
 ```
 {
@@ -48,10 +48,19 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
    ```
 
 2. Clone the repository locally.
-3. Configure the application (see the examples in ./config/)
-4. Run the script (see the syntax)
+   ```
+   $ git clone https://github.com/marcbria/sushiReport.git
+   ```
 
-## Docker
+3. Configure the application (see the examples in ./config/)
+
+4. Run the script (see the syntax)
+   ```
+   $ php sushiReport.php config/config-JR1.json yesterday
+   ```
+
+
+## Docker (recommended)
 
 Ensure you have docker installed and 
 
@@ -67,11 +76,14 @@ Ensure you have docker installed and
 
 4. Run it with your own parameters:
 
-```$ docker run --rm -i sushi-report:latest php sushiReport.php```
+```$ docker run --rm -i sushi-report:latest php sushiReport.php config/yourConfig.json yesterday```
 
-<!-- TODO: Alternatively, you can avoid all this steps using the image in docker hub
+### Alternative calls (TODO)
+
+You can avoid all former steps just runing the image in docker hub (still not uploaded):
 and creating a file volume with your personalized config.json:
-```$ docker run --rm -v "$(pwd)"/myconfig.json:/usr/share/sushiReport/config.json:ro``` -->
+```$ docker run --rm -v "$(pwd)"/myconfig.json:/usr/share/sushiReport/config.json:ro -i sushi-report:latest``` -->
+
 
 # Cases of use
 
@@ -86,6 +98,7 @@ an alternative way to get this global picture.
 Journal articles could be republished by third party (repositories, indexers...).
 Editors would like to know the impact of their work in a centralized place.
 
+
 # Usage
 
 You can decide how to use this script. Our approach was:
@@ -99,8 +112,10 @@ two config files with "yesterday" parameter.
 
 Data is appened to files in a public web folder to let us (and editors) download it.
 
+
 # Dependencies
 PHP 7+ (with php-xml, php-curl)
+
 
 # Author
 Marc Bria - marc.bria(a)uab.cat
