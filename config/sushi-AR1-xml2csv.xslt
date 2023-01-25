@@ -4,10 +4,14 @@
 
 <xsl:template match="/">
 
-    <xsl:text>&#10;</xsl:text>
+    <!-- xsl:text>Institution, ISSN, Begin, End, Category, MetricType, Count</xsl:text-->
+    <xsl:variable name="journal" select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ParentItem/c:ItemIdentifier[c:Type='Proprietary']/c:Value" />
+    <xsl:text>&#xA;</xsl:text>
 
     <xsl:for-each select="sc:ReportResponse/sc:Report/c:Report/c:Customer/c:ReportItems/c:ItemPerformance">
 
+      <xsl:value-of select="$journal"/>
+      <xsl:text>,</xsl:text>
       <xsl:value-of select="../c:ItemIdentifier[c:Type='Proprietary']/c:Value"/>
       <xsl:text>,</xsl:text>
       <xsl:value-of select="c:Period/c:Begin"/>

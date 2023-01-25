@@ -136,7 +136,7 @@ Protect your download folder if you don't like to make this cvs public (althogh 
 
 This script is still beta. Further testing is required and it could be extended as follows:
 
-- [ ] Add journal as first column in AR1 results.
+- [x] Add journal as first column in AR1 results.
 - [ ] Push image to Docker Hub.
 - [ ] Unit tests.
 - [ ] Test against non OJS sources.
