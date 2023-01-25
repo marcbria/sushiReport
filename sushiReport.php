@@ -53,7 +53,7 @@ class SushiReport {
             // Cargamos y procesamos el xml de cada revista
             $result = $this->loadXML($journal, $this->xslt_file);
          
-	        //file_put_contents("result-" . $this->config_file . ".csv", $result);
+            //file_put_contents("result-" . $this->config_file . ".csv", $result);
             printf ("$result\n\n");
 
         }
