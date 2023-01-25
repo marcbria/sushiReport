@@ -42,9 +42,9 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
    ```
    $ php -v | grep cli \
      && echo "PLUGINS: " \
-     && php -m | grep -q xml && echo "XML:  Found" || echo "XML: Not found" \
-     && php -m | grep -q xml && echo "XML:  Found" || echo "XML: Not found" \
-     && php -m | grep -q curl && echo "cURL: Found" || echo "cURL: Not found" 
+     && php -m | grep -q xml && echo "XML:  Found" || echo "XML: Not found. Install libxml2-dev and the xml extension PHP." \
+     && php -m | grep -q xsl && echo "XSL:  Found" || echo "XSL: Not found. Install libxslt-dev and the xsl extension for PHP." \
+     && php -m | grep -q curl && echo "cURL: Found" || echo "cURL: Not found. Install curl and the curl extension for PHP." 
    ```
 
 2. Clone the repository locally.
