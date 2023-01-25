@@ -159,7 +159,7 @@ class SushiReport {
 
 printf("> Loading configuration...\n");
 
-$config_file = "config/config.json";
+$config_file = "config.json";
 if(isset($argv[1])){
     $config_file = $argv[1];
 }

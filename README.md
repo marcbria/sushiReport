@@ -138,6 +138,7 @@ This script is still beta. Further testing is required and it could be extended 
 
 - [ ] Add journal as first column in AR1 results.
 - [ ] Push image to Docker Hub.
+- [ ] Unit tests.
 - [ ] Test against non OJS sources.
 - [ ] Let the script save results (instead of stdout).
 - [ ] Entrypoint with "test, config, show & save" actions for the Dockerimage.
