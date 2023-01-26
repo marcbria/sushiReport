@@ -16,7 +16,7 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
 2. Create a myconfig.json with your preferences.
 3. Call the script as follows:
 ```
-$ docker run --rm -v "myconfig.json:/usr/share/sushiReport/config.json" -i sushi-report:latest
+$ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i sushi-report:latest
 ```
 4. Read the documentation...
 -->
@@ -105,7 +105,7 @@ As expained in the quickstart, you can avoid all former steps running the image 
 config.json. The call will be as follows:
 
 ```
-$ docker run --rm -v "myconfig.json:/usr/share/sushiReport/config.json -i sushi-report:latest
+$ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json -i sushi-report:latest
 ```
 
 Container will run with default paramenters and will asume config.json as the config file, so it's enough
