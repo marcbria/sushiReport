@@ -137,13 +137,10 @@ Define two config files:
 - ```config-AR1.json```: Daily range, with your full list of journals and AR1 data.
 
 Create a bash script wrapper (see cronSushi.sh) to call sushiReport.php with the proper parameters,
-and we add the script in cron.
+and we add the script calls in cron.
 
-sushiReport is called with "yesterday" parameter and data is append to files in a public web folder 
-to let us (and editors) download it.
-
-Protect your download folder if you don't like to make this cvs public (although IMHO, don't make 
-much sense because all this data is public to be harvested).
+sushiReport is called without dates to only process yesterday's data.
+Data is append to files in a public web folder to let the service members download it.
 
 
 # TBD
