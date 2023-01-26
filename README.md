@@ -9,16 +9,18 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
 - ```configfile.json```: path to the config file. Default assumes ./config.json.
 - ```yesterday```: Overwrites config dates to be "yesteday". Useful for cron daily calls.
 
-<!--
 # Quickstart
 
 1. Ensure you have docker up and running.
 2. Create a myconfig.json with your preferences.
-3. Call the script as follows:
+```
+$ wget https://raw.githubusercontent.com/marcbria/sushiReport/main/config.json -O myconfig.json && vim myconfig.json
+```
+3. Run the script as follows:
 ```
 $ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i sushi-report:latest
 ```
-4. Read the documentation...
+4. Got in trouble? Read the documentation...
 -->
 
 # Config 
