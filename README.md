@@ -3,11 +3,10 @@ A small and high configurable harvester that collects COUNTER statistics from mu
 
 # Syntax
 ```
-$ php sushiReport.php [<configfile.json> [yesterday]]
+$ php sushiReport.php [<config_file.json>]
 ```
 
-- ```configfile.json```: path to the config file. Default assumes ./config.json.
-- ```yesterday```: Overwrites config dates to be "yesteday". Useful for cron daily calls.
+- ```config_file.json```: path to the config file. Default assumes ./config.json.
 
 # Quickstart
 
@@ -28,8 +27,9 @@ $ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i sushi-r
 - ```xslt_filename```: name of the xsl transformations file.
 - ```report```: sushi report type (JR1, AR1).
 - ```release```: release number (ie: 4.1).
-- ```begin_date```: starting period.
-- ```end_date```: end period.
+- ```results_file```: If is set, results will be saved with this filename (append mode).
+- ```begin_date```: If is set, the starting period. Otherwise, yesterday will be asumed.
+- ```end_date```: If is set, the ending period. Otherwise, yesterday will be asumed.
 - ```base_url```: array with the base urls of the journals to collect.
 
 ```
@@ -152,18 +152,17 @@ This script is still beta. Further testing is required and it could be extended 
 
 - [x] Add journal as first column in AR1 results.
 - [ ] Push image to Docker Hub.
-- [ ] Unit tests.
+- [ ] Add unit tests.
 - [ ] Test against non OJS sources.
-- [ ] Let the script save results (instead of stdout).
-- [ ] Entrypoint with "test, config, show & save" actions for the Dockerimage.
-- [ ] When save: Year rotation.
-- [ ] When save: Journal rotation.
-- [ ] Rethink calling parameters.
+- [x] Let the script save results (instead of stdout).
+- [ ] Entrypoint with "test, run" actions for the Dockerimage.
+- [x] Remove calling parameters: All based on config file values.
+- [ ] Think filename autorotations: Daily, Monthly, Yearly...
+- [ ] Overwrite config settings with ENV variables.
 
 
 # Dependencies
 PHP 7+ (with php-xml, php-xsl, php-curl)
 
 # Author
-Marc Bria - marc.bria(a)uab.cat
-
+Marc Bria - marc.bria(a)uab.cat (Universitat Autònoma de Barcelona)

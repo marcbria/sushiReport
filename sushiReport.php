@@ -52,13 +52,17 @@ class SushiReport {
         // Getting the full journal list
         foreach ($this->base_urls as $journal => $base_url) {
 
-            printf("--> Processing journal: $journal");
+            printf("--> Processing journal: $journal\n");
 
             // Cargamos y procesamos el xml de cada revista
-            $result = $this->loadXML($journal, $this->xslt_file);
+            $results = $this->loadXML($journal, $this->xslt_file);
          
-            if file_put_contents("result-" . $this->config_file . ".csv", $result);
-            printf ("$result\n\n");
+            if ($this->results_file != '') {
+                file_put_contents($this->results_file, $results . PHP_EOL, FILE_APPEND);
+                //file_put_contents($this->results_file, trim($results . "\n"), FILE_APPEND);
+            } else {
+                printf ("$results\n\n");
+            }
 
         }
     }
@@ -82,7 +86,7 @@ class SushiReport {
         if (!file_exists($this->config_file)) {
             printf ("\nError: config file [$this->config_file] not found.\n\n");
             printf ("Check file name and permisions and the syntax of your call:\n");
-            printf ("  $ php sushiReport.php yourConfig.json\n");
+            printf ("  $ php sushiReport.php config.json\n");
             die();
         }
     }
@@ -94,6 +98,9 @@ class SushiReport {
         }
         if (!extension_loaded('xml')) {
             die("Error: xml extension not loaded.");
+        }
+        if (!extension_loaded('xsl')) {
+            die("Error: xsl extension not loaded.");
         }
     }
 
