@@ -1,5 +1,5 @@
 # sushiReport
-A small and high configurable harvester that collects COUNTER statistics from multiple OJS (sushi-lite plugin required) and returns data in CSV format.
+A small and high configurable harvester that collects COUNTER statistics from multiple OJS (sushi-lite plugin required) and returns data in CSV format. 
 
 # Syntax
 ```
@@ -9,6 +9,17 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
 - ```configfile.json```: path to the config file. Default assumes ./config.json.
 - ```yesterday```: Overwrites config dates to be "yesteday". Useful for cron daily calls.
 
+<!--
+# Quickstart
+
+1. Ensure you have docker up and running.
+2. Create a myconfig.json with your preferences.
+3. Call the script as follows:
+```
+$ docker run --rm -v "myconfig.json:/usr/share/sushiReport/config.json" -i sushi-report:latest
+```
+4. Read the documentation...
+-->
 
 # Config 
 
@@ -27,8 +38,8 @@ $ php sushiReport.php [<configfile.json> [yesterday]]
     "begin_date": "2022-01-01",
     "end_date": "2022-12-31",
     "base_urls": {
-      "analisi": "https://analisi.cat",
-	    "anuarioiet": "https://revistes.uab.cat/anuarioiet"
+      "journal01": "https://journal01.foo",
+      "journal02": "https://journal02.foo"
     }
 }
 ```
@@ -89,12 +100,16 @@ Ensure you have docker installed and
 
 ### Alternative calls (TODO)
 
-You can avoid former steps just running the image from Docker Hub (warning: images still not uploaded yet)
-and creating a file volume with your personalized config.json as follows:
+As expained in the quickstart, you can avoid all former steps running the image from Docker Hub 
+(warning: images still not uploaded yet) and creating a file volume with your personalized 
+config.json. The call will be as follows:
 
 ```
-$ docker run --rm -v "$(PWD)"/myconfig.json:/usr/share/sushiReport/config.json:ro -i sushi-report:latest
+$ docker run --rm -v "myconfig.json:/usr/share/sushiReport/config.json -i sushi-report:latest
 ```
+
+Container will run with default paramenters and will asume config.json as the config file, so it's enough
+to create/overwrite this config.json file to run the script.
 
 
 # Cases of use
@@ -115,21 +130,18 @@ Editors would like to know the impact of their work in a centralized place.
 
 You can decide how to use this script. Our approach was:
 
-We defined two config files:
-- ```config-JR1.json```: Daily range, with our full list of journals and JR1 data.
-- ```config-AR1.json```: Daily range, with our full list of journals and AR1 data.
+Define two config files:
+- ```config-JR1.json```: Daily range, with your full list of journals and JR1 data.
+- ```config-AR1.json```: Daily range, with your full list of journals and AR1 data.
 
-We created two daily crons (at 00:30 and 00:40) calling the script with those
-two config files with "yesterday" parameter.
+Create a bash script wrapper (see cronSushi.sh) to call sushiReport.php with the proper parameters,
+and we add the script in cron.
 
-Our cron looks like this:
+sushiReport is called with "yesterday" parameter and data is append to files in a public web folder 
+to let us (and editors) download it.
 
-```
-30 00 * * * docker run --rm -i sushi-report:latest php sushiReport.php config/uab/config-JR1.json yesterday >> /home/dojo/sites/common/counter/2023-service.csv
-```
-
-Data is appened to files in a public web folder to let us (and editors) download it.
-Protect your download folder if you don't like to make this cvs public (althogh IMHO, don't make much sense).
+Protect your download folder if you don't like to make this cvs public (although IMHO, don't make 
+much sense because all this data is public to be harvested).
 
 
 # TBD
