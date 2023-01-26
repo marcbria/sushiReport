@@ -5,11 +5,17 @@
 #
 
 APP_PATH="${APP_PATH:-/usr/src/sushiReport}"
-WEB_PATH="${WEB_PATH:-/var/www/html/counter}"
+OUT_PATH="${WEB_PATH:-$APP_PATH}"
 
 cd "${APP_PATH}"
-php sushiReport.php config/config-JR1.json yesterday >> ${WEB_PATH}/service-JR1.csv
-php sushiReport.php config/config-AR1.json yesterday >> ${WEB_PATH}/service-AR1.csv
+
+# Example 1: Stdout is redirected to a file. 
+# If its runned in a container, you will need to create a volume to recover this results file.
+php sushiReport.php config/config-JR1.json >> ${OUT_PATH}/results-JR1.csv
+
+# Example 2: Config requests to store output in results_file:
+# If its runned in a container, you will need to create a volume to recover this results file.
+php sushiReport.php config/config-AR1.json
 
 # It could also be called outside the container as follows:
 # docker run --rm -v "${APP_PATH}/config/config-JR1.json:${APP_PATH}/config.json" -it sushi-report:latest >> ${WEB_PATH}/service-JR.csv
