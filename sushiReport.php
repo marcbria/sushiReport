@@ -15,25 +15,29 @@ class SushiReport {
     private $release;
     private $begin_date;
     private $end_date;
+    private $results_file;
 
     // Sushi constructor: Set the variables from parameters and/or config file.
-    public function __construct($config_file, $period = null)
+    public function __construct($config_file)
     {
 
         $this->config_file=$config_file;
+        $this->config_file = isset($config_file)?$config_file:"config.json";
+
         $this->checkConfigFile($config_file);
         $config = json_decode(file_get_contents($this->config_file), true);
-        $this->base_urls = $config['base_urls'];
-        $this->xslt_file = "config/" . $config['xslt_file'];
-        $this->report = $config['report'];
-        $this->release = $config['release'];
-        $this->begin_date = $config['begin_date'];
-        $this->end_date = $config['end_date'];
 
-        if ($period == "yesterday") {
-            $this->begin_date = date('Y-m-d',strtotime("-1 days"));
-            $this->end_date = date('Y-m-d',strtotime("-1 days"));
-        }
+        $this->base_urls = isset($config['base_urls'])?$config['base_urls']:"";
+        $this->xslt_file = isset($config['xslt_file'])?"config/".$config['xslt_file']:"";
+        $this->report = isset($config['report'])?$config['report']:"";
+        $this->release = isset($config['release'])?$config['release']:"";
+        $this->results_file = isset($config['results_file'])?$config['results_file']:"";
+
+        $yesterday = date('Y-m-d',strtotime("-1 days"));
+        $this->begin_date = isset($config['begin_date'])?$config['begin_date']:$yesterday;
+        $this->end_date = isset($config['end_date'])?$config['end_date']:$yesterday;
+
+        // TODO: $this->verbosity = isset($config['verbosity'])?$config['verbosity']:"1";
 
         $this->showConfig();
     }
@@ -53,7 +57,7 @@ class SushiReport {
             // Cargamos y procesamos el xml de cada revista
             $result = $this->loadXML($journal, $this->xslt_file);
          
-            //file_put_contents("result-" . $this->config_file . ".csv", $result);
+            if file_put_contents("result-" . $this->config_file . ".csv", $result);
             printf ("$result\n\n");
 
         }
@@ -62,12 +66,13 @@ class SushiReport {
     public function showConfig () {
 
         printf ("\n====================================================\n");
-        printf ("  - Config file: " . $this->config_file . "\n");
-        printf ("  - XSLT file:   " . $this->xslt_file . "\n");
-        printf ("  - Base urls:   " . count($this->base_urls) . "\n");
-        printf ("  - Date range:  " . $this->begin_date . " to " . $this->end_date . "\n");
-        printf ("  - Report:      " . $this->report . "\n");
-        printf ("  - Release:     " . $this->release . "\n");
+        printf ("  - Config file:  " . $this->config_file . "\n");
+        printf ("  - XSLT file:    " . $this->xslt_file . "\n");
+        printf ("  - Base urls:    " . count($this->base_urls) . "\n");
+        printf ("  - Results file: " . $this->results_file . "\n");
+        printf ("  - Date range:   " . $this->begin_date . " to " . $this->end_date . "\n");
+        printf ("  - Report:       " . $this->report . "\n");
+        printf ("  - Release:      " . $this->release . "\n");
         printf ("====================================================\n\n");
 
     }
@@ -164,12 +169,7 @@ if(isset($argv[1])){
     $config_file = $argv[1];
 }
 
-$period = "";
-if(isset($argv[2])){
-    $period = $argv[2];
-}
-
-$sushiReport = new SushiReport($config_file, $period);
+$sushiReport = new SushiReport($config_file);
 $sushiReport->run();
 
 printf ("> Process FINISHED!\n");

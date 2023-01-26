@@ -4,6 +4,7 @@
     "release": "4.1",
     "begin_date": "2023-01-22",
     "end_date": "2023-01-22",
+    "results_file": "202301-JR1.csv",
     "base_urls": {
 	    "journal01": "https://journal01.foo",
 	    "journal02": "https://journal02.foo"
