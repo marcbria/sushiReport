@@ -10,27 +10,27 @@ $ php sushiReport.php [<config_file.json>]
 
 # Quickstart
 
-1. Ensure you have docker up and running.
-2. Create a myconfig.json with your preferences.
+1. Ensure you have docker [installed](https://docs.docker.com/get-docker) and running.
+2. Create a myconfig.json with your preferences (see Config section).
 ```
 $ wget https://raw.githubusercontent.com/marcbria/sushiReport/main/config.json -O myconfig.json && vim myconfig.json
 ```
 3. Run the script as follows:
 ```
-$ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i sushi-report:latest
+$ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i marcbria/sushi-report:latest
 ```
 4. Got in trouble? Read the documentation...
--->
+
 
 # Config 
 
 - ```xslt_filename```: name of the xsl transformations file.
 - ```report```: sushi report type (JR1, AR1).
 - ```release```: release number (ie: 4.1).
-- ```results_file```: If is set, results will be saved with this filename (append mode).
+- ```results_file```: If is set, results will be appened to this file.
 - ```begin_date```: If is set, the starting period. Otherwise, yesterday will be asumed.
 - ```end_date```: If is set, the ending period. Otherwise, yesterday will be asumed.
-- ```base_url```: array with the base urls of the journals to collect.
+- ```base_url```: An array with the base urls of the journals to collect.
 
 ```
 {
@@ -148,7 +148,7 @@ Data is append to files in a public web folder to let the service members downlo
 This script is still beta. Further testing is required and it could be extended as follows:
 
 - [x] Add journal as first column in AR1 results.
-- [ ] Push image to Docker Hub.
+- [x] Push image to Docker Hub.
 - [ ] Add unit tests.
 - [ ] Test against non OJS sources.
 - [x] Let the script save results (instead of stdout).
