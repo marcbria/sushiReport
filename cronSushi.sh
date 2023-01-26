@@ -4,8 +4,8 @@
 # Edit it to fit your needs (variables, uncomment, extend...)
 #
 
-APP_PATH="/usr/src/sushiReport"
-WEB_PATH="/var/www/html/counter"
+APP_PATH="${APP_PATH:-/usr/src/sushiReport}"
+WEB_PATH="${WEB_PATH:-/var/www/html/counter}"
 
 cd "${APP_PATH}"
 php sushiReport.php config/config-JR1.json yesterday >> ${WEB_PATH}/service-JR1.csv
