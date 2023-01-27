@@ -27,7 +27,7 @@ class SushiReport {
         $this->checkConfigFile($config_file);
         $config = json_decode(file_get_contents($this->config_file), true);
 
-        $this->base_urls = isset($config['base_urls'])?$config['base_urls']:"";
+        $this->base_urls = is_array($config['base_urls'])?$config['base_urls']:"";
         $this->xslt_file = isset($config['xslt_file'])?"config/".$config['xslt_file']:"";
         $this->report = isset($config['report'])?$config['report']:"";
         $this->release = isset($config['release'])?$config['release']:"";
