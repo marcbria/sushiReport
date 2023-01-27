@@ -13,6 +13,7 @@ class SushiReport {
     private $base_urls;
     private $report;
     private $release;
+    private $silent;
     private $begin_date;
     private $end_date;
     private $results_file;
@@ -32,12 +33,11 @@ class SushiReport {
         $this->report = isset($config['report'])?$config['report']:"";
         $this->release = isset($config['release'])?$config['release']:"";
         $this->results_file = isset($config['results_file'])?$config['results_file']:"";
+        $this->silent = isset($config['silent'])?$config['silent']:false;
 
         $yesterday = date('Y-m-d',strtotime("-1 days"));
         $this->begin_date = isset($config['begin_date'])?$config['begin_date']:$yesterday;
         $this->end_date = isset($config['end_date'])?$config['end_date']:$yesterday;
-
-        // TODO: $this->verbosity = isset($config['verbosity'])?$config['verbosity']:"1";
 
         $this->showConfig();
     }
@@ -47,12 +47,12 @@ class SushiReport {
 
         $this->checkRequirements();
 
-        printf("> Harvesting and processing...\n");
+	$this->print("> Harvesting and processing...\n");
 
         // Getting the full journal list
         foreach ($this->base_urls as $journal => $base_url) {
 
-            printf("--> Processing journal: $journal\n");
+            $this->print("--> Processing journal: $journal\n");
 
             // Cargamos y procesamos el xml de cada revista
             $results = $this->loadXML($journal, $this->xslt_file);
@@ -67,18 +67,25 @@ class SushiReport {
         }
     }
 
+    // Helper function to print based on "silent" config parameter.
+    public function print ($message) {
+        if (! $this->silent) {
+	    printf ("${message}");
+	}
+    }
+
     public function showConfig () {
-
-        printf ("\n====================================================\n");
-        printf ("  - Config file:  " . $this->config_file . "\n");
-        printf ("  - XSLT file:    " . $this->xslt_file . "\n");
-        printf ("  - Base urls:    " . count($this->base_urls) . "\n");
-        printf ("  - Results file: " . $this->results_file . "\n");
-        printf ("  - Date range:   " . $this->begin_date . " to " . $this->end_date . "\n");
-        printf ("  - Report:       " . $this->report . "\n");
-        printf ("  - Release:      " . $this->release . "\n");
-        printf ("====================================================\n\n");
-
+        if (! $this->silent) {
+            printf ("\n====================================================\n");
+            printf ("  - Config file:  " . $this->config_file . "\n");
+            printf ("  - XSLT file:    " . $this->xslt_file . "\n");
+            printf ("  - Base urls:    " . count($this->base_urls) . "\n");
+            printf ("  - Results file: " . $this->results_file . "\n");
+            printf ("  - Date range:   " . $this->begin_date . " to " . $this->end_date . "\n");
+            printf ("  - Report:       " . $this->report . "\n");
+            printf ("  - Release:      " . $this->release . "\n");
+	    printf ("====================================================\n\n");
+        }
     }
 
     // Helper to check php requirements.
@@ -169,7 +176,7 @@ class SushiReport {
  *   Main   * 
  ************/
 
-printf("> Loading configuration...\n");
+//printf("> Loading configuration...\n");
 
 $config_file = "config.json";
 if(isset($argv[1])){
@@ -178,5 +185,4 @@ if(isset($argv[1])){
 
 $sushiReport = new SushiReport($config_file);
 $sushiReport->run();
-
-printf ("> Process FINISHED!\n");
+$sushiReport->print("> Process FINISHED!\n");

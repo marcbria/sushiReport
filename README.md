@@ -28,6 +28,7 @@ $ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i marcbri
 - ```report```: sushi report type (JR1, AR1).
 - ```release```: release number (ie: 4.1).
 - ```results_file```: If is set, results will be appened to this file.
+- ```silent```: If 'true', verbosity will be reduced to zero (only data and errors returned).
 - ```begin_date```: If is set, the starting period. Otherwise, yesterday will be asumed.
 - ```end_date```: If is set, the ending period. Otherwise, yesterday will be asumed.
 - ```base_url```: An array with the base urls of the journals to collect.
@@ -37,6 +38,7 @@ $ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i marcbri
     "xslt_filename": "sushi-xml2csv.xslt",
     "report": "JR1",
     "release": "4.1",
+    "silent": false,
     "begin_date": "2022-01-01",
     "end_date": "2022-12-31",
     "base_urls": {

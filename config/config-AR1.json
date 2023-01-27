@@ -2,6 +2,7 @@
     "xslt_file": "sushi-AR1-xml2csv.xslt",
     "report": "AR1",
     "release": "4.1",
+    "silent": true,
     "begin_date": "2023-01-22",
     "end_date": "2023-01-22",
     "base_urls": {
