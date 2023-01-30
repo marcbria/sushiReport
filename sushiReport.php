@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Class SushiReport
  * Gets xml from each journal and process it to return a CSV.
@@ -9,14 +8,19 @@ class SushiReport {
 
     // Variables de configuración
     private $config_file;
-    private $xslt_file;
+
     private $base_urls;
+    private $xslt_file;
+
     private $report;
     private $release;
+    private $results_file;
     private $silent;
+    private $timeout;
+
     private $begin_date;
     private $end_date;
-    private $results_file;
+
 
     // Sushi constructor: Set the variables from parameters and/or config file.
     public function __construct($config_file)
@@ -30,10 +34,12 @@ class SushiReport {
 
         $this->base_urls = is_array($config['base_urls'])?$config['base_urls']:"";
         $this->xslt_file = isset($config['xslt_file'])?"config/".$config['xslt_file']:"";
+
         $this->report = isset($config['report'])?$config['report']:"";
         $this->release = isset($config['release'])?$config['release']:"";
         $this->results_file = isset($config['results_file'])?$config['results_file']:"";
         $this->silent = isset($config['silent'])?$config['silent']:false;
+        $this->timeout = isset($config['timeout'])?$config['timeout']:60;
 
         $yesterday = date('Y-m-d',strtotime("-1 days"));
         $this->begin_date = isset($config['begin_date'])?$config['begin_date']:$yesterday;
@@ -46,20 +52,18 @@ class SushiReport {
     public function run() {
 
         $this->checkRequirements();
-
-	$this->print("> Harvesting and processing...\n");
+	    $this->print("> Harvesting and processing...\n");
 
         // Getting the full journal list
         foreach ($this->base_urls as $journal => $base_url) {
 
             $this->print("--> Processing journal: $journal\n");
 
-            // Cargamos y procesamos el xml de cada revista
+            // Loading and processing the xml for each journal
             $results = $this->loadXML($journal, $this->xslt_file);
          
             if ($this->results_file != '') {
                 file_put_contents($this->results_file, $results . PHP_EOL, FILE_APPEND);
-                //file_put_contents($this->results_file, trim($results . "\n"), FILE_APPEND);
             } else {
                 printf ("$results\n\n");
             }
@@ -67,13 +71,14 @@ class SushiReport {
         }
     }
 
-    // Helper function to print based on "silent" config parameter.
+    // Helper function to print based on "silent" config parameter (verbose by default).
     public function print ($message) {
         if (! $this->silent) {
-	    printf ("${message}");
-	}
+	        printf ("$message");
+	    }
     }
 
+    // Helper function to show how the config is processed (only when verbose mode).
     public function showConfig () {
         if (! $this->silent) {
             printf ("\n====================================================\n");
@@ -84,11 +89,12 @@ class SushiReport {
             printf ("  - Date range:   " . $this->begin_date . " to " . $this->end_date . "\n");
             printf ("  - Report:       " . $this->report . "\n");
             printf ("  - Release:      " . $this->release . "\n");
-	    printf ("====================================================\n\n");
+            printf ("  - Timeout:      " . $this->timeout . "\n");
+	        printf ("====================================================\n\n");
         }
     }
 
-    // Helper to check php requirements.
+    // Helper to check if config file exists.
     public function checkConfigFile () {
         if (!file_exists($this->config_file)) {
             printf ("\nError: config file [$this->config_file] not found.\n\n");
@@ -121,55 +127,74 @@ class SushiReport {
         return $queryString;
     }
 
-    // Helper to get the XML via curl.
+    // Gets the XML using curl.
     public function getXML($url) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        $result = curl_exec($curl);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
+
+        // Error management (ie: 404, timeouts...)
+        curl_setopt($curl, CURLOPT_FAILONERROR, true);
+        try {
+            $result = curl_exec($curl);
+            if ($result === false) {
+                throw new Exception(curl_error($curl), curl_errno($curl));
+            }
+        } catch (Exception $e) {
+            // Just in case you like to manage the exception:
+            // error_log("Error loading the url: \n$url\n" . $e->getMessage());
+            $result = false;
+        }
         curl_close($curl);
         return $result;
     }
+    
 
     // Helper to load the XML from the specified url and process it with the specified xslt file.
     public function loadXML($journal) {
 
         $url = $this->base_urls[$journal] . $this->queryString();
+    
+        // Adding some info for verbose mode:
+        $this->print("\n--> URL String: $url");
 
-        // Cargamos el XML desde la URL (gestión de errores).
+        $result="";
+
+        // Loading XML from an URL
         $xml_string = $this->getXML($url);
-        if ($xml_string === false) {
-            die("Error loading XML\n");
+        if ($xml_string) {
+    
+            // Loading the XSLT specified in the config.json file
+            $xsl = new DOMDocument();
+            if (!file_exists($this->xslt_file)) {
+                die("Error: xslt_file not found\n");
+            }
+            $xsl->load($this->xslt_file);
+            
+            // Creating a new DOM Document to load the XML
+            $xml = new DOMDocument();
+            $xml->loadXML($xml_string);
+        
+            // Creating a new XSLT processor to import the style and convert to CSV
+            $proc = new XSLTProcessor();
+            $proc->importStylesheet($xsl);
+        
+            // Doing the transformation and returning the result
+            $result = $proc->transformToXML($xml);
+        
         }
 
-        // Cargamos el XSLT indicado en el config.json
-        $xsl = new DOMDocument();
-        if (!file_exists($this->xslt_file)) {
-            die("Error: xslt_file not found\n");
-        }
-        $xsl->load($this->xslt_file);
-
-        // Creamos un nuevo documento y cargamos el XML
-        $xml = new DOMDocument();
-        $xml->loadXML($xml_string);
-
-        // Creamos un nuevo procesador XSLT y importamos el estilo
-        $proc = new XSLTProcessor();
-        $proc->importStylesheet($xsl);
-
-        // Realizamos la transformación y devolvemos el resultado
-        $result = $proc->transformToXML($xml);
-
+        // result is empty when we got an error.
         if ( trim($result) == "" ) {
             $result = "\nNo data avaliable: Probably sushi-lite plugin is not enabled in $journal";
         }
 
         return $result;
     }
-
-
+    
 }
 
 /************

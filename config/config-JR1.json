@@ -6,8 +6,7 @@
     "begin_date": "2022-01-01",
     "end_date": "2023-01-10",
     "base_urls": {
-	    "anuarioiet": "https://revistes.uab.cat/anuarioiet",
-	    "periodicum": "https://revistes.uab.cat/periodicum",
-	    "brumal": "https://revistes.uab.cat/brumal"
+	    "journal01": "https://journal01.foo",
+	    "journal02": "https://journal02.foo/whatever"
     }
 }

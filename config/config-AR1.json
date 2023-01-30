@@ -2,11 +2,13 @@
     "xslt_file": "sushi-AR1-xml2csv.xslt",
     "report": "AR1",
     "release": "4.1",
-    "silent": true,
-    "begin_date": "2023-01-22",
-    "end_date": "2023-01-22",
+    "results_file": "",
+    "silent": false,
+    "begin_date": "2000-01-01",
+    "end_date": "2022-12-31",
+    "timeout": 200,
     "base_urls": {
-	    "anuarioiet": "https://revistes.uab.cat/periodicum",
-	    "anuarioiet": "https://revistes.uab.cat/anuarioiet"
+	    "journal01": "https://journal01.foo",
+	    "journal02": "https://journal02.foo/whatever"
     }
 }

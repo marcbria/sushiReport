@@ -29,6 +29,7 @@ $ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i marcbri
 - ```release```: release number (ie: 4.1).
 - ```results_file```: If is set, results will be appened to this file.
 - ```silent```: If 'true', verbosity will be reduced to zero (only data and errors returned).
+- ```timeout```: Overwrites php.ini timeout (default is 60).
 - ```begin_date```: If is set, the starting period. Otherwise, yesterday will be asumed.
 - ```end_date```: If is set, the ending period. Otherwise, yesterday will be asumed.
 - ```base_url```: An array with the base urls of the journals to collect.
@@ -39,6 +40,7 @@ $ docker run --rm -v "myconfig.json:/usr/src/sushiReport/config.json" -i marcbri
     "report": "JR1",
     "release": "4.1",
     "silent": false,
+    "timeout": 100,
     "begin_date": "2022-01-01",
     "end_date": "2022-12-31",
     "base_urls": {
